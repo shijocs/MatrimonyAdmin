@@ -19,11 +19,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddNewShop extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+
     EditText shopName;
     EditText shopemail;
     EditText shopPassword;
     EditText shopAddress;
+    EditText shopPhone;
+    EditText shopLand;
     Button shopAdd;
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -31,20 +33,24 @@ public class AddNewShop extends AppCompatActivity {
     String password;
     String name;
     String address;
+    String phone;
+    String land;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_shop);
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Shops");
 
-        mAuth = FirebaseAuth.getInstance();
+
+    //    mAuth = FirebaseAuth.getInstance();
 
         shopName = (EditText) findViewById(R.id.shop_name);
         shopemail = (EditText) findViewById(R.id.shop_email);
-        shopPassword = (EditText) findViewById(R.id.shop_password);
+      //  shopPassword = (EditText) findViewById(R.id.shop_password);
         shopAddress = (EditText) findViewById(R.id.shop_address);
+        shopPhone = (EditText) findViewById(R.id.shop_phone);
+        shopLand= (EditText) findViewById(R.id.shop_land);
         shopAdd = (Button) findViewById(R.id.btn_addShop);
 
         shopAdd.setOnClickListener(new View.OnClickListener() {
@@ -55,41 +61,25 @@ public class AddNewShop extends AppCompatActivity {
                  password = shopPassword.getText().toString().trim();
                 name = shopName.getText().toString().trim();
                 address = shopAddress.getText().toString().trim();
-                registerShop(email,password,name,address);
+                phone = shopPhone.getText().toString().trim();
+                land = shopLand.getText().toString().trim();
+
+//                myRef = database.getReference("Shops/"+ name);
+//                myRef.child("shop_name").setValue(name);
+//                myRef.child("shop_email").setValue(email);
+//                myRef.child("shop_address").setValue(address);
+//                myRef.child("Phone").setValue(phone);
+//                myRef.child("Land_Mark").setValue(land);
+
+
+
+                Intent i =new Intent(AddNewShop.this,MainActivity.class);
+                startActivity(i);
+                //registerShop(email,password,name,address);
             }
 
 
         });
     }
-    private void registerShop(final String email, String password, final String name, final String address) {
 
-
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(AddNewShop.this, "Failed add new shop",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(AddNewShop.this, "suucessfully added new user.",
-                                    Toast.LENGTH_SHORT).show();
-                            myRef.push();
-                            myRef.child("shop_name").setValue(name);
-                            myRef.child("shop_email").setValue(email);
-                            myRef.child("shop_address").setValue(address);
-                            Intent i =new Intent(AddNewShop.this,MainActivity.class);
-                            startActivity(i);
-                        }
-
-                        // ...
-                    }
-                });
-    }
 }

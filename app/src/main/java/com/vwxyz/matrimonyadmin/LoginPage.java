@@ -39,9 +39,9 @@ public class LoginPage extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email1 = email.getText().toString().trim();
-                String password1 = password.getText().toString().trim();
-                logIn(email1,password1);
+                //String email1 = email.getText().toString().trim();
+               // String password1 = password.getText().toString().trim();
+                logIn("shijoglitz@gmail.com","Holybible**7");
             }
         });
     }
